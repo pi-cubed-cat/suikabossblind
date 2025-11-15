@@ -1,0 +1,16 @@
+{
+    "id": "suikabossblind",
+    "name": "Suika Boss Blind",
+    "author": ["pi_cubed"],
+    "description": "suika",
+    "prefix": "suikabb",
+    "main_file": "suikabossblind.lua",
+    "badge_colour": "00AA00",
+    "display_name": "Suika Boss",
+    "dependencies": [
+        "Steamodded (>=1.0.0~BETA-0711a)",
+        "DebugPlus"
+    ],
+    "version": "0.0.0",
+    "allow_redistribution": true
+}

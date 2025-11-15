@@ -1,0 +1,46 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+# Game:load
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+position = "after"
+pattern = "boot_timer('splash prep', 'end',1)"
+payload = """
+suika_load()
+"""
+match_indent = true
+overwrite = false
+
+# Game:update
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+position = "before"
+pattern = "if self.STATE == self.STATES.PLAY_TAROT then"
+payload = """
+if do_suika then
+  update_suika(dt)
+end
+
+"""
+match_indent = true
+overwrite = false
+
+# Game:draw
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+position = "after"
+pattern = "timer_checkpoint('uiboxes', 'draw')"
+payload = """
+if do_suika then
+  draw_suika()
+end
+
+"""
+match_indent = true
+overwrite = false
