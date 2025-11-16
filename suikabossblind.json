@@ -11,6 +11,6 @@
         "Steamodded (>=1.0.0~BETA-0711a)",
         "DebugPlus"
     ],
-    "version": "0.0.0",
+    "version": "0.0.1",
     "allow_redistribution": true
 }

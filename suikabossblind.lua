@@ -89,6 +89,17 @@ end
         --objB.body:applyForce(-x, -y*1000*(objB.rank))
       elseif objA.body:getY() + objA.rank * 10 < 125 then
         suika_gameover = true
+        if G.GAME.blind and G.GAME.blind.config.blind.key == 'bl_suikabb_melon' then
+          G.E_MANAGER:add_event(Event({
+              trigger = "immediate",
+              func = function()
+                G.STATE = G.STATES.HAND_PLAYED
+                G.STATE_COMPLETE = true
+                end_round()
+                return true
+              end,
+          }))
+        end
       end
     end
   end
@@ -149,6 +160,18 @@ function update_suika(dt)
           table.insert(objects.balls, Ball(v.body:getX(), v.body:getY(), v.rank + 1))
           v.merge_target.remove = true
           v.remove = true
+          if v.rank + 1 == 7 and G.GAME.blind and G.GAME.blind.config.blind.key == 'bl_suikabb_melon' then
+            G.GAME.chips = G.GAME.blind.chips
+            G.E_MANAGER:add_event(Event({
+                trigger = "immediate",
+                func = function()
+                  G.STATE = G.STATES.HAND_PLAYED
+                  G.STATE_COMPLETE = true
+                  end_round()
+                  return true
+                end,
+            }))
+          end
         else
           v.merge_target.remove = true
           v.remove = true
@@ -240,3 +263,42 @@ function draw_suika()
   love.graphics.printf(next_rank, indicator.x-98, indicator.y-10.5, 200, "center")
 
 end
+
+SMODS.Atlas({
+    key = 'suikablind',
+    path = 'blinds.png',
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 21,
+    px = 34,
+    py = 34
+})
+
+-- The Melon
+SMODS.Blind {
+    key = "melon",
+    loc_txt = {
+        name = 'The Melon',
+        text = {
+            "Extra large blind,",
+            "or play a minigame!"
+        }
+    },
+    dollars = 6,
+    mult = 4,
+    pos = { x = 0, y = 0 },
+    atlas = 'suikablind',
+    boss = { min = 1 },
+    boss_colour = HEX("50bf7c"),
+    calculate = function(self, blind, context)
+        if context.setting_blind then
+            suika()
+        end
+    end,
+    disable = function(self)
+        G.GAME.blind.chips = G.GAME.blind.chips / 2
+        G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+    end,
+    defeat = function(self)
+        disable_suika()
+    end
+}
