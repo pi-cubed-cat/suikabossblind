@@ -8,9 +8,8 @@
     "badge_colour": "00AA00",
     "display_name": "Suika Boss",
     "dependencies": [
-        "Steamodded (>=1.0.0~BETA-0711a)",
-        "DebugPlus"
+        "Steamodded (>=1.0.0~BETA-0711a)"
     ],
-    "version": "0.0.1",
+    "version": "0.0.2",
     "allow_redistribution": true
 }

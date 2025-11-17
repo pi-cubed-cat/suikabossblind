@@ -34,8 +34,8 @@ overwrite = false
 [[patches]]
 [patches.pattern]
 target = "game.lua"
-position = "after"
-pattern = "timer_checkpoint('uiboxes', 'draw')"
+position = "before"
+pattern = "if G.SPLASH_FRONT then"
 payload = """
 if do_suika then
   draw_suika()
